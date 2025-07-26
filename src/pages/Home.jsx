@@ -1,9 +1,26 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
+import { authService } from '../services/api';
 import '../styles/home.css';
 
 function Home() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  
+  useEffect(() => {
+    const greetUser = async () => {
+      try {
+        const response = await authService.greetUser();
+        console.log('Welcome message:', response);
+        setMessage(response.message);
+      } catch (error) {
+        console.error('Error fetching welcome message:', error);
+      }
+    };
+    greetUser();
+  }, []);
 
   const handleSubscribe = (e) => {
     e.preventDefault();
@@ -14,7 +31,7 @@ function Home() {
 
   return (
     <div className="home-container">
-      <h1 className="home-title">Welcome to MochaPay ☕</h1>
+      <h1 className="home-title">{message}</h1>
       <p className="home-description">
         MochaPay is a digital wallet and payment system for the next generation of merchants and users.
         Powered by MochaCoin — a token valued at <strong>KES 150</strong>, accepted at MochaCafe and partner outlets.
