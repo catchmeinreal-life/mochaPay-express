@@ -1,48 +1,67 @@
-# MochaPay Web Client 💸☕
+# Hackathon BootDev
 
-**MochaPay** is a demo digital payment platform, part of the broader **MochaEcosystem**, designed to power seamless and secure transactions within emerging communities—starting with MochaCafe, a conceptual coffee shop that accepts MochaCoin as payment.
+A simple React-based payment interface for sending MochaCoins, built for hackathon prototyping. This app features user registration, a payment form, and a home dashboard.
 
-This project serves as an entry point for users to **send**, **receive**, and **register** MochaCoin wallets using a clean web interface powered by the **MERN stack**.
+## Features
 
-## 🚀 Features
+- User registration form
+- Send MochaCoins to other users
+- Simple, card-style payment UI
+- React Router navigation
 
-- 🔐 User registration and login via email & password
-- 💰 Load wallet by wallet ID & send MochaCoins to other wallets
-- 🧾 View balances (upcoming)
-- 📬 Receive payments via wallet ID or email
-- 🔄 Simulated Lipa na MochaPay module
-- 🌐 MongoDB Atlas backend for wallet, user, and transaction storage
-- 🛠️ Built entirely with beginner-to-intermediate JavaScript (Node.js, React.js)
+## Getting Started
 
-## 📈 Vision
+### Prerequisites
 
-In the next 10 years, MochaPay aims to evolve into a full-fledged **blockchain-powered fintech platform**, issuing **MochaCoin** (target value: 1 MochaCoin = KES 150), to power both in-store and ecosystem-wide payments.
+- Node.js (v18+ recommended)
+- npm
 
-## 🧪 Demo Mode
+### Installation
 
-- 🌱 On registration, users receive **3 MochaCoins** (equivalent to KES 450).
-- 🏪 Demo merchant (MochaCafe) and partner wallets are pre-seeded with 1,000,000 and 500,000 MochaCoins respectively.
-- 💎 No smart contracts (yet); this is a conceptual fintech MVP.
+1. Clone the repository:
+   ```sh
+   git clone <your-repo-url>
+   cd hackathon_BootDev
+   ```
 
-## 📦 Tech Stack
+2. Install dependencies:
+   ```sh
+   npm install
+   ```
 
-| Layer       | Stack                    |
-|-------------|--------------------------|
-| Frontend    | React.js + JSX + CSS     |
-| Deployment  | Vercel 
+### Running the App
 
-## 🛠 Setup Instructions
+Start the development server:
+```sh
+npm run dev
+```
+The app will be available at `http://localhost:5173` (or as indicated in your terminal).
 
-```bash
-# Clone the repository
-git clone https://github.com/
-cd mochaPay
+### Build for Production
 
-# Install dependencies
+```sh
+npm run build
+```
 
+### Lint
 
-# Create .env file and configure:
+```sh
+npm run lint
+```
 
+## Project Structure
 
-# Run the client
-npm start
+- `src/pages/Home.jsx` – Home dashboard and payment entry
+- `src/pages/Send.jsx` – Payment form for sending MochaCoins
+- `src/pages/Register.jsx` – User registration form
+- `src/App.jsx` – Main app and routing
+- `src/styles/` – CSS files for styling
+
+## API Integration
+
+- Registration endpoint: `https://api.mochapay.io/register`
+- Payment logic: (to be implemented or connected to your backend)
+
+## License
+
+MIT
