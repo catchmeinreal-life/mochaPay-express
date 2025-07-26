@@ -13,7 +13,7 @@ function MessageContainer (){
                 
                 setMessage(response.message);
             } catch (error) {
-                setMessage("Failed to fetch message");
+                setMessage("Welcome to MochaPay ☕");
                 console.error('Error fetching message:', error);
             } finally {
                 setFetching(false);
@@ -26,7 +26,7 @@ function MessageContainer (){
         <h1 className="home-title">
             {fetching ? (
                 'Loading message...'
-            ) : 'Welcome to MochaPay ☕'}
+            ) : message}
         </h1>
     );
 }
