@@ -2,6 +2,12 @@
 
 A simple React-based payment interface for sending MochaCoins, built for hackathon prototyping. This app features user registration, a payment form, and a home dashboard.
 
+## Backend API
+
+This frontend consumes a pre-existing backend API I built before the hackathon.  
+The backend is **not** part of this submission and will not be judged.  
+Hosted at: [https://mochapayment.onrender.com/](https://mochapayment.onrender.com/)
+
 ## Features
 
 - User registration form
