@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import '../styles/register.css';
 
+import NavBar from "../components/NavBar";
+
 const Register = () => {
   const [form, setForm] = useState({
     name: "",
@@ -55,6 +57,8 @@ const Register = () => {
   };
 
   return (
+    <>
+    <NavBar />
     <div className="register-container">
       <h2>Create MochaPay Gateway Account</h2>
       <p className="desc">Set up an account to start sending & receiving payments</p>
@@ -101,6 +105,7 @@ const Register = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
