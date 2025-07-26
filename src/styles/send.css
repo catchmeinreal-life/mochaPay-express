@@ -1,0 +1,79 @@
+/* Center content vertically and horizontally */
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  background: linear-gradient(to bottom right, #fffbe6, #fff3e0);
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* Card-style form */
+.payment-form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  width: 100%;
+  max-width: 420px;
+}
+
+/* Form title */
+.payment-form h1 {
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-align: center;
+  color: #8d4b1b;
+}
+
+/* Label styling */
+.payment-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #8d4b1b;
+}
+
+/* Input styling */
+.payment-form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border 0.3s ease;
+  background-color: #fffdf5;
+}
+
+.payment-form input:focus {
+  outline: none;
+  border-color: #ff8800;
+}
+
+/* Button styling */
+.payment-form button {
+  width: 100%;
+  padding: 12px;
+  background-color: #ff8800;
+  color: white;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.payment-form button:hover {
+  background-color: #e67300;
+}
+
+/* Small text for footer/notes */
+.payment-form .note {
+  text-align: center;
+  font-size: 12px;
+  color: #666;
+  margin-top: 12px;
+}
