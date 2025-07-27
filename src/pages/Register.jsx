@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 import '../styles/register.css';
-
 import NavBar from "../components/NavBar";
+import { authService } from '../services/api';
 
 const Register = () => {
   const [form, setForm] = useState({
-    name: "",
+    username: "",
     email: "",
     password: "",
-    confirmPassword: ""
   });
 
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
+  const [walletInfo, setWalletInfo] = useState(null);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -20,91 +20,84 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    if (form.password !== form.confirmPassword) {
-      setMessage("Passwords do not match.");
-      setSuccess(false);
-      return;
-    }
-
     try {
-      const res = await fetch("https://api.mochapay.io/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          name: form.name,
-          email: form.email,
-          password: form.password
-        })
-      });
+      const res = await authService.register(form);
 
-      const data = await res.json();
-
-      if (res.ok) {
-        setMessage(`Wallet created! Your Wallet ID: ${data.walletId || "Check your email"}`);
+      if (res.success) {
+        setMessage(res.message || "User registered successfully");
         setSuccess(true);
-        setForm({ name: "", email: "", password: "", confirmPassword: "" });
+        setWalletInfo(res.data.user);
+        setForm({ username: "", email: "", password: "" });
       } else {
-        setMessage(data.message || "Something went wrong.");
+        setMessage(res.message || "Something went wrong.");
         setSuccess(false);
       }
     } catch (err) {
-      setMessage("Server error. Try again later.");
+      if (err.response?.status === 409) {
+        setMessage("User with this email or username already exists");
+      } else {
+        setMessage("Server error. Try again later.");
+      }
       setSuccess(false);
     }
   };
 
   return (
     <>
-    <NavBar />
-    <div className="register-container">
-      <h2>Create MochaPay Gateway Account</h2>
-      <p className="desc">Set up an account to start sending & receiving payments</p>
+      <NavBar />
+      <div className="register-container">
+        <h2>Create MochaPay Gateway Account</h2>
+        <p className="desc">Set up an account to start sending & receiving payments</p>
 
-      <form onSubmit={handleSubmit} className="register-form">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={form.name}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email Address"
-          value={form.email}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={form.password}
-          onChange={handleChange}
-          required
-        />
-        <input
-          type="password"
-          name="confirmPassword"
-          placeholder="Confirm Password"
-          value={form.confirmPassword}
-          onChange={handleChange}
-          required
-        />
-        <button type="submit" className="register-btn">Register</button>
-      </form>
+        {!success ? (
+          <form onSubmit={handleSubmit} className="register-form">
+            <input
+              type="text"
+              name="username"
+              placeholder="Full Name"
+              value={form.username}
+              onChange={handleChange}
+              required
+              autoComplete="name"
+            />
+            <input
+              type="email"
+              name="email"
+              placeholder="Email Address"
+              value={form.email}
+              onChange={handleChange}
+              required
+              autoComplete="email"
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={form.password}
+              onChange={handleChange}
+              required
+              autoComplete="new-password"
+            />
+            <button type="submit" className="register-btn">Register</button>
+          </form>
+        ) : (
+          walletInfo && (
+            <div className="modal success-modal">
+              <h3>🎉 Wallet Created Successfully!</h3>
+              <p><strong>Username:</strong> {walletInfo.username}</p>
+              <p><strong>Email:</strong> {walletInfo.email}</p>
+              <p><strong>Wallet ID:</strong> {walletInfo.accountId|| "Check your email for details"}</p>
+              <p className="success">{message}</p>
+            </div>
+          )
+        )}
 
-      {message && (
-        <div className={`register-message ${success ? "success" : "error"}`}>
-          {message}
-        </div>
-      )}
-    </div>
+        {message && !success && (
+          <div className="register-message error">
+            {message}
+          </div>
+        )}
+      </div>
     </>
   );
 };
