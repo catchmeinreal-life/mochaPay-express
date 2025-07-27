@@ -13,6 +13,7 @@ const Register = () => {
   const [message, setMessage] = useState("");
   const [success, setSuccess] = useState(false);
   const [walletInfo, setWalletInfo] = useState(null);
+  const [Loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -39,6 +40,14 @@ const Register = () => {
         setMessage("Server error. Try again later.");
       }
       setSuccess(false);
+    } finally {
+      setLoading(false);
+      // Reset form after submission
+      setTimeout(() => {
+        setMessage("");
+        setSuccess(false);
+        setWalletInfo(null);
+      }, 5000); // Clear message after 5 seconds
     }
   };
 
@@ -78,7 +87,11 @@ const Register = () => {
               required
               autoComplete="new-password"
             />
-            <button type="submit" className="register-btn">Register</button>
+            { Loading ? (<button type="submit" className="register-btn" >
+                Registering...</button>
+            ) : (
+              <button type="submit" className="register-btn">Register</button>
+            )}
           </form>
         ) : (
           walletInfo && (
