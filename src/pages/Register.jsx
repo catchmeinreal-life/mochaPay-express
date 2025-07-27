@@ -22,6 +22,7 @@ const Register = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await authService.register(form);
 
       if (res.success) {
@@ -46,7 +47,6 @@ const Register = () => {
       setTimeout(() => {
         setMessage("");
         setSuccess(false);
-        setWalletInfo(null);
       }, 5000); // Clear message after 5 seconds
     }
   };
