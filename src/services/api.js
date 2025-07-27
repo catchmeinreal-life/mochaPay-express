@@ -29,7 +29,7 @@ MochaApi.interceptors.response.use(
         return response;
     },
     (error) => {
-        console.error('got an error while waiting for the response', error.message);
+        console.error('got an error while waiting for the response', error);
         return Promise.reject(error);
     }
 )
@@ -48,6 +48,11 @@ export const authService = {
     transact: async (transactionData) => {
         const response = await MochaApi.post('/api/wallet/transfer/pin', transactionData);
         console.log('server response', response.data.data);
+        return response.data;
+    },
+    register: async (userData) => {
+        const response = await MochaApi.post('/api/auth/signup', userData);
+        console.log('server response', response.data);
         return response.data;
     },
 }
