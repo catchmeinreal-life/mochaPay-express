@@ -61,7 +61,8 @@ function Home() {
             to send or receive within the ecosystem.
           </p>
           <p className="home-links">
-            <a href="/register">Create an account</a>
+            <Link to="/about">Learn more about MochaPay</Link>
+            <Link to="/register">Create an account</Link>
           </p>
         </div>
       </div>
