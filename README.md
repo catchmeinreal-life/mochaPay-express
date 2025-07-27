@@ -1,73 +1,93 @@
-# Hackathon BootDev
+# 🏆 MochaPay — MochaVerse Gateway ‹ Boot.dev Hackathon 2025 Submission ›
 
-A simple React-based payment interface for sending MochaCoins, built for hackathon prototyping. This app features user registration, a payment form, and a home dashboard.
+**Live Demo:** [https://mochapay-express.onrender.com](https://mochapay-express.onrender.com)
 
-## Backend API
+---
 
-This frontend consumes a pre-existing backend API I built before the hackathon.  
-The backend is **not** part of this submission and will not be judged.  
-Hosted at: [https://mochapayment.onrender.com/](https://mochapayment.onrender.com/)
+## ✨ Project Overview
 
-## Features
+MochaPay is your secure digital token wallet for the future. Powered by MochaCoin, it enables peer-to-peer and merchant payments inside the MochaVerse ecosystem.
 
-- User registration form
-- Send MochaCoins to other users
-- Simple, card-style payment UI
-- React Router navigation
+* **Demo‑ready:** New users receive 3 MochaCoins (\~KES 450).
+* **Seamless UX:** No login required—simple wallet address entry and a PIN confirm flow.
+* **Secure PIN-based validation** (inspired by Safaricom’s M‑PESA PIN model).
 
-## Getting Started
+> This build was created fresh during the hackathon—only the frontend code was written during the event, while leveraging an existing backend API (transparent per rules). Only the frontend repo is submitted.
 
-### Prerequisites
+---
 
-- Node.js (v18+ recommended)
-- npm
+## 🧠 Technical Stack & Features
 
-### Installation
+* **Frontend:** React (Vite + React)
+* **Backend integration:** Axios-powered service calling authenticated endpoints; transaction endpoint `/api/wallet/transfer/pin`
+* **PIN verification flow:**
 
-1. Clone the repository:
-   ```sh
-   git clone <your-repo-url>
-   cd hackathon_BootDev
-   ```
+  1. User completes sender/receiver/amount form
+  2. Prompted for PIN in modal
+  3. Client POSTs: `{ fromAccountId, toAccountId, amount, pin }`
+  4. On success: shows confirmation, clears sensitive data
+* Uses `react-toastify` for user feedback
 
-2. Install dependencies:
-   ```sh
-   npm install
-   ```
+**Backend logic:**
 
-### Running the App
+* Validates PIN by matching with user's password hash
+* Verifies balances & recipient, prevents self‑transfer
+* Records transaction and returns transaction summary with updated balance and recipient info
+* Base endpoint: transferCoins secured by JWT middleware
 
-Start the development server:
-```sh
-npm run dev
+---
+
+## 🛠 Installation & Demo
+
+1. Clone frontend repo.
+2. Run `npm install` and set `.env` with `VITE_MOCHA_API_URL=https://mochapayment.onrender.com`.
+3. `npm start` launches a React app; backend is already hosted.
+
+### Demo flows:
+
+* Visit homepage → view greeting message from API.
+* Click Send → fill in wallet addresses & amount.
+* Enter PIN modal → confirm → toast feedback + UI response.
+* All sensitive values cleared after use.
+
+---
+
+## 📆 Example successful transaction payload
+
+```json
+{
+  "success": true,
+  "message": "Transfer successful with PIN confirmation",
+  "data": {
+    "transaction": {
+      "transactionId":"TXN_...",
+      "fromAccountId":"MC_...",
+      "toAccountId":"MC_...",
+      "amount":5,
+      "currency":"MochaCoin",
+      "status":"completed",
+      "description":"User-confirmed PIN transfer",
+      "createdAt":"2025-07-27T09:18:54.811Z"
+    },
+    "senderBalance":46,
+    "receiverInfo":{"accountId":"MC_ADMIN_001","username":"admin"}
+  }
+}
 ```
-The app will be available at `http://localhost:5173` (or as indicated in your terminal).
 
-### Build for Production
+---
 
-```sh
-npm run build
-```
+## 📣 Business Vision & Promotion
 
-### Lint
+MochaPay is more than a wallet—it's the gateway to the MochaVerse, the new payment ecosystem spanning mobile, café, and merchant transactions.
 
-```sh
-npm run lint
-```
+Leveraging this hackathon entry, I’m engaging early investors to drive adoption and integrate MochaCoin into partner outlets like MochaCafe.
 
-## Project Structure
+---
 
-- `src/pages/Home.jsx` – Home dashboard and payment entry
-- `src/pages/Send.jsx` – Payment form for sending MochaCoins
-- `src/pages/Register.jsx` – User registration form
-- `src/App.jsx` – Main app and routing
-- `src/styles/` – CSS files for styling
+## 🤝 Acknowledgements
 
-## API Integration
+> "Built this payment gateway for the Boot.dev Hackathon using React + MochaCoin."
 
-- Registration endpoint: `https://api.mochapay.io/register`
-- Payment logic: (to be implemented or connected to your backend)
-
-## License
-
-MIT
+Thank you for considering MochaPay!
+Let’s make MochaVerse the next-gen payment standard. 🚀
