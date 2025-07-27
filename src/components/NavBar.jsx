@@ -26,7 +26,7 @@ function NavBar() {
                 <ul className={`navbar-nav ${isMenuOpen ? 'active' : ''}`}>
                     <li className="nav-item">
 
-                        <Link to="/About" className="nav-link">About</Link>
+                        <Link to="/about" className="nav-link">About</Link>
                     </li>
                     { ( isMainPage ? (
                             <li className="nav-item">
