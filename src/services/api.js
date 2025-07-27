@@ -46,7 +46,8 @@ export const authService = {
         return response.data;
     },
     transact: async (transactionData) => {
-        const response = await MochaApi.post('/api/wallet/transfer', transactionData);
+        const response = await MochaApi.post('/api/wallet/transfer/pin', transactionData);
+        console.log('server response', response.data.data);
         return response.data;
     },
 }
