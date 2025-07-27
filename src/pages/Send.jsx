@@ -1,87 +1,122 @@
-import { useState } from 'react';
-import '../styles/send.css'; // Card-style payment form
+import React, { useState } from 'react';
+import axios from 'axios';
+import '../styles/send.css'; // Optional external styling
+import { toast } from 'react-toastify';
 
 import NavBar from '../components/NavBar';
 
-function Send() {
-  const [sender, setSender] = useState('');
-  const [receiver, setReceiver] = useState('');
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
+import { authService } from '../services/api';
+
+
+
+const SendMochaCoin = () => {
+  const [senderWallet, setSenderWallet] = useState('');
+  const [receiverWallet, setReceiverWallet] = useState('');
   const [amount, setAmount] = useState('');
-  const [message, setMessage] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [pin, setPin] = useState('');
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const handleSendPayment = async (e) => {
-    e.preventDefault();
-    setMessage('');
+  const handleSendClick = () => {
+    if (!senderWallet || !receiverWallet || !amount) {
+      toast.error('Please fill in all fields');
+      return;
+    }
+    setShowPinModal(true);
+  };
 
-    if (!sender || !receiver || !amount) {
-      setMessage('Please fill in all fields.');
+  const handleConfirmTransfer = async () => {
+    if (!pin) {
+      toast.error('Enter your PIN');
       return;
     }
 
-    if (isNaN(amount) || Number(amount) <= 0) {
-      setMessage('Please enter a valid amount.');
-      return;
-    }
+    setLoading(true);
 
-    setIsLoading(true);
     try {
-      // TODO: Implement API call or transaction logic here
-      setTimeout(() => {
-        setMessage(`Successfully sent ${amount} MochaCoins!`);
-      }, 1000);
+      const response = await authService.transact({
+        fromAccountId: senderWallet,
+        toAccountId: receiverWallet,
+        amount: parseFloat(amount),
+        pin,
+      });
+      if (!response.success) {
+        toast.error(response.message || 'Transfer failed');
+      } else {
+        toast.success(`✅ Transferred ${amount} MochaCoins to ${receiverWallet}`);
+      }
+
     } catch (error) {
-      setMessage('Error occurred during transaction.');
+      const msg = error.response?.data?.message || 'Transfer failed';
+      toast.error(`❌ ${msg}`);
     } finally {
-      setIsLoading(false);
+      setLoading(false);
+      setPin('');
+      setShowPinModal(false);
     }
   };
 
   return (
     <>
-        <NavBar />
-        <div className="container">
-          <form onSubmit={handleSendPayment} className="payment-form">
-            <h1>Send MochaCoins</h1>
+    <NavBar />
+    <div className="send-container">
+      <h2>Send MochaCoins</h2>
 
-            <label htmlFor="sender">Sender Wallet ID</label>
+      <input
+        type="text"
+        placeholder="Sender Wallet"
+        value={senderWallet}
+        onChange={(e) => setSenderWallet(e.target.value)}
+      />
+      <input
+        type="text"
+        placeholder="Receiver Wallet"
+        value={receiverWallet}
+        onChange={(e) => setReceiverWallet(e.target.value)}
+      />
+      <input
+        type="number"
+        placeholder="Amount"
+        value={amount}
+        onChange={(e) => setAmount(e.target.value)}
+      />
+
+      <button onClick={handleSendClick} disabled={loading}>
+        {loading ? 'Processing...' : 'Send Payment'}
+      </button>
+
+      {showPinModal && (
+        <div className="modal-overlay">
+          <div className="modal">
+            <h4>Enter your PIN to confirm transfer</h4>
             <input
-              type="text"
-              id="sender"
-              value={sender}
-              onChange={(e) => setSender(e.target.value)}
-              required
+              type="password"
+              placeholder="Transaction PIN"
+              value={pin}
+              onChange={(e) => setPin(e.target.value)}
             />
-
-            <label htmlFor="receiver">Receiver Wallet ID</label>
-            <input
-              type="text"
-              id="receiver"
-              value={receiver}
-              onChange={(e) => setReceiver(e.target.value)}
-              required
-            />
-
-            <label htmlFor="amount">Amount</label>
-            <input
-              type="number"
-              id="amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              required
-              min="0"
-              step="0.01"
-            />
-
-            <button type="submit" disabled={isLoading}>
-              {isLoading ? 'Sending...' : 'Send Payment'}
-            </button>
-
-            {message && <p className="note">{message}</p>}
-          </form>
+            <div className="modal-buttons">
+              <button onClick={handleConfirmTransfer} disabled={loading}>
+                {loading ? 'Sending...' : 'Confirm'}
+              </button>
+              <button
+                onClick={() => {
+                  setShowPinModal(false);
+                  setPin('');
+                }}
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
-    </>
+      )}
+    </div>
+    <ToastContainer /> </>
   );
-}
+};
 
-export default Send;
+export default SendMochaCoin;
