@@ -43,12 +43,6 @@ const Register = () => {
       setSuccess(false);
     } finally {
       setLoading(false);
-      // Reset form after submission
-      setTimeout(() => {
-        setMessage("");
-        setSuccess(false);
-      }, 5000); // Clear message after 5 seconds
-    }
   };
 
   return (
