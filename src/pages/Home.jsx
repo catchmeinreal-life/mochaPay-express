@@ -32,8 +32,8 @@ function Home() {
         </p>
 
         <div className="home-subscribe-box btn-cont">
-            <Link to='/send'>send</Link>
-            <button type="submit" className="home-button">Receive</button>
+            <Link className="home-button" to='/send'>send</Link>
+            
         </div>
 
         <div className="home-subscribe-box">
