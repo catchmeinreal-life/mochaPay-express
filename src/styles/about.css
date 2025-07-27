@@ -1,0 +1,66 @@
+.about-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 20px;
+  background: linear-gradient(to bottom right, #fffaf0, #fff3e6);
+  font-family: 'Segoe UI', sans-serif;
+  color: #333;
+  line-height: 1.6;
+}
+
+.about-title {
+  text-align: center;
+  font-size: 36px;
+  color: #8d4b1b;
+  margin-bottom: 30px;
+}
+
+.about-intro {
+  font-size: 18px;
+  margin-bottom: 40px;
+  text-align: center;
+}
+
+.about-section {
+  margin-bottom: 40px;
+}
+
+.about-section h2 {
+  font-size: 24px;
+  color: #e67300;
+  margin-bottom: 15px;
+}
+
+.about-list {
+  padding-left: 20px;
+}
+
+.about-list li {
+  margin-bottom: 10px;
+}
+
+.about-list.numbered {
+  list-style: decimal;
+}
+
+.about-cta {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.about-button {
+  background-color: #ff8800;
+  color: white;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  display: inline-block;
+  margin-top: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.about-button:hover {
+  background-color: #e67300;
+}
