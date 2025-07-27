@@ -19,17 +19,33 @@
   margin-bottom: 40px;
 }
 
-.home-subscribe-box {
+/* .home-subscribe-box {
   background-color: #fff;
   border-radius: 12px;
   padding: 30px;
   box-shadow: 0 0 15px rgba(0,0,0,0.05);
   margin-bottom: 40px;
-}
+} */
 /* .home-subscribe-box.btn-cont{
   display: flex;
   justify-content: space-around;
 } */
+ .home-subscribe-box {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.05);
+  margin: 0 auto 40px;
+  max-width: 400px;
+}
+
+.center-button {
+  display: flex;
+  justify-content: center;
+  max-width: 400px;
+  margin: 0 auto 40px;
+}
+
 
 .home-subscribe-title {
   font-size: 22px;
