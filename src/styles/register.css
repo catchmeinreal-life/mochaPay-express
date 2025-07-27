@@ -70,3 +70,21 @@
 .error {
   color: crimson;
 }
+
+.success-modal {
+  margin-top: 1rem;
+  padding: 1.5rem;
+  background: #eaffea;
+  border: 1px solid #75c775;
+  border-radius: 12px;
+  text-align: left;
+  color: #2c6e2c;
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.05);
+}
+.success-modal h3 {
+  margin-bottom: 0.5rem;
+}
+.success-modal p {
+  margin: 0.3rem 0;
+}
+
